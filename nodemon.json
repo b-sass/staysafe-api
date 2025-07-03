@@ -4,5 +4,5 @@
     ".env"
   ],
   "ext": ".ts",
-  "exec": "node --trace-deprecation --abort-on-uncaught-exception -r ts-node/register ./src/main.ts"
+  "exec": "node --env-file=.env --trace-deprecation --abort-on-uncaught-exception -r ts-node/register ./src/main.ts"
 }

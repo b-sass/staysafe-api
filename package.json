@@ -4,7 +4,8 @@
     "@types/node": "^24.0.10",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
-    "mariadb": "^3.4.4"
+    "mariadb": "^3.4.4",
+    "sequelize": "^6.37.7"
   },
   "name": "mad-api",
   "description": "Rest api for the mad project",
