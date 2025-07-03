@@ -1,8 +1,8 @@
 import mariadb from "mariadb"
 
 let pool = mariadb.createPool({
-	host: "127.0.0.1",
-	port: 3306,
+	host: process.env.DB_ADDRESS,
+	port: process.env.DB_PORT,
 	user: "staysafe",
 	password: "staysafe",
 	database: "staysafe"
