@@ -1,4 +1,5 @@
 import connection from './db';
+import { createUser, getUserById, getAllUsers } from './controllers/users';
 import express, { Response } from "express";
 
 const app = express()
@@ -17,7 +18,8 @@ async function testDB(res: Response) {
   try {
     await connection.authenticate();
     console.log(process.env.DB_USER)
-    res.send('Connection has been established successfully.');
+    console.log('Connection has been established successfully.');
+    res.send(await getAllUsers());
     
   } catch (error) {
     res.send(`Unable to connect to the database: ${error}`);
