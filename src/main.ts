@@ -1,27 +1,33 @@
 import connection from './db';
-import { createUser, getUserById, getAllUsers } from './controllers/users';
 import express, { Response } from "express";
+import userRouter from "./routes/users";
 
 const app = express()
 const port = 3000
 
+
+app.use("/users", userRouter);
+
+
 app.get('/', (req, res) => {
-  
-  testDB(res);
+  res.send({
+    "endpoints": {
+      "activities": [
+        "get", "post", "put", "delete"
+      ],
+      "contacts": [
+        "post", "delete"
+      ],
+      "locations": [ 
+        "get", "post", "put", "delete"
+      ],
+      "users": [
+        "get", "post", "put", "delete"
+      ]
+    }
+  })
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-async function testDB(res: Response) {
-  try {
-    await connection.authenticate();
-    console.log(process.env.DB_USER)
-    console.log('Connection has been established successfully.');
-    res.send(await getAllUsers());
-    
-  } catch (error) {
-    res.send(`Unable to connect to the database: ${error}`);
-  }
-}
