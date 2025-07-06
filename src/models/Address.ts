@@ -44,4 +44,27 @@ const Address = connection.define(
     }
 )
 
+const getAllAddresses = async () => {
+  return await Address.findAll();
+};
+
+const getAddressById = async (id: number) => {
+  return await Address.findByPk(id);
+};
+
+const createAddress = async (address: AddressModel) => {
+  await Address.create({ ...address });
+};
+
+const updateAddress = async (id: number, address: AddressModel) => {
+  let a = await Address.findByPk(id);
+  a?.set({ ...address });
+};
+
+const deleteAddress = async (id: number) => {
+  await Address.destroy({ where: { id } });
+};
+
+
 export { Address, AddressModel };
+export { getAllAddresses, getAddressById, createAddress, updateAddress, deleteAddress };
