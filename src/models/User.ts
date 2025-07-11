@@ -38,37 +38,19 @@ const User = connection.define(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        latitude: {
+            type: DataTypes.DOUBLE,
+            allowNull: true,
+        },
+        longitude: {
+            type: DataTypes.DOUBLE,
+            allowNull: true,
+        },
     },
     {
         tableName: "users",
     }
 );
 
-const getAllUsers = async () => {
-  return await User.findAll();
-};
-
-const getUserById = async (id: number) => {
-  return await User.findByPk(id)
-};
-
-const createUser = async (user: UserModel) => {
-  await User.create({ ...user });
-};
-
-const updateUser = async (id: number, user: UserModel) => {
-  let u = await User.findByPk(id);
-  u?.set({ ...user })
-};
-
-const deleteUser = async (id: number) => {
-  User.destroy({
-    where: {
-      id: id,
-    }
-  })
-};
-
 export { User, UserModel };
-export { getAllUsers, getUserById, createUser, updateUser, deleteUser };

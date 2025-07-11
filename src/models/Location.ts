@@ -35,26 +35,4 @@ const Location = connection.define(
     }
 );
 
-const getAllLocations = async () => {
-  return await Location.findAll();
-};
-
-const getLocationById = async (id: number) => {
-  return await Location.findByPk(id);
-};
-
-const createLocation = async (location: LocationModel) => {
-  await Location.create({ ...location });
-};
-
-const updateLocation = async (id: number, location: LocationModel) => {
-  let l = await Location.findByPk(id);
-  l?.set({ ...location });
-};
-
-const deleteLocation = async (id: number) => {
-  await Location.destroy({ where: { id } });
-};
-
 export { Location, LocationModel };
-export { getAllLocations, getLocationById, createLocation, updateLocation, deleteLocation,}

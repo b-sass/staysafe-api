@@ -34,21 +34,4 @@ const ActivityLocation = connection.define(
     }
 );
 
-const getAllActivityLocations = async () => {
-  return await ActivityLocation.findAll();
-};
-
-const getActivityLocationsByActivity = async (activity: number) => {
-  return await ActivityLocation.findAll({ where: { activity } });
-};
-
-const addActivityLocation = async (activityLocation: ActivityLocationModel) => {
-  await ActivityLocation.create({ ...activityLocation });
-};
-
-const deleteActivityLocation = async (activity: number, from: number, to: number) => {
-  await ActivityLocation.destroy({ where: { activity, from, to } });
-};
-
 export { ActivityLocation, ActivityLocationModel };
-export { getAllActivityLocations, getActivityLocationsByActivity, addActivityLocation, deleteActivityLocation };

@@ -24,24 +24,6 @@ const Contact = connection.define(
         tableName: "contacts",
         timestamps: false,
     }
-)
-
-const getAllContacts = async () => {
-  return await Contact.findAll();
-};
-
-const getContactsByUser = async (user: number) => {
-  return await Contact.findAll({ where: { user } });
-};
-
-const addContact = async (contact: ContactModel) => {
-  await Contact.create({ ...contact });
-};
-
-const deleteContact = async (user: number, contact: number) => {
-  await Contact.destroy({ where: { user, contact } });
-};
-
+);
 
 export { Contact, ContactModel };
-export { getAllContacts, getContactsByUser, addContact, deleteContact };

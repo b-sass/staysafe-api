@@ -48,29 +48,6 @@ const Activity = connection.define(
     {
         tableName: "activities",
     }
-)
-
-const getAllActivities = async () => {
-  return await Activity.findAll();
-};
-
-const getActivityById = async (id: number) => {
-  return await Activity.findByPk(id);
-};
-
-const createActivity = async (activity: ActivityModel) => {
-  await Activity.create({ ...activity });
-};
-
-const updateActivity = async (id: number, activity: ActivityModel) => {
-  let a = await Activity.findByPk(id);
-  a?.set({ ...activity });
-};
-
-const deleteActivity = async (id: number) => {
-  await Activity.destroy({ where: { id } });
-};
-
+);
 
 export { Activity, ActivityModel };
-export { getAllActivities, getActivityById, createActivity, updateActivity, deleteActivity };
