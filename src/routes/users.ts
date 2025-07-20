@@ -2,11 +2,17 @@ import { Request, RequestHandler, Response, Router } from "express";
 import { User } from "../models/User";
 const router = Router();
 import { Validate, ValidateLogin, ValidateUser } from "../middleware/validate";
+import { matchedData } from "express-validator";
 
 
 //Get all users
 router.get("/", async (req: Request, res: Response) => {
     let users = await User.findAll();
+
+    if (!users) {
+        res.status(404).json({message: "No users in the database"});
+        return;
+    }
 
     res.status(200).send(users);
 })
@@ -17,11 +23,15 @@ router.get("/:id", async (req: Request, res: Response) => {
     try {
         let user = await User.findByPk(parseInt(userID));
 
-        if (!user) { res.status(404).json({ error: "No user found."})}
+        if (!user) { 
+            res.status(404).json({ error: "No user found."})
+            return;
+        }
+
         res.status(200).json(user);
     } catch (err) {
         res.status(500).json({
-            error: `${err}`
+            error: [err]
         })
     }
 });
@@ -31,12 +41,17 @@ router.post(
     ValidateUser,
     Validate,
     async (req: Request, res: Response) => {
-        console.log("POST: user")
-        let userDetails = req.body;
+        let details = matchedData<{
+            first_name: string, last_name: string,
+            username: string, phone: string,
+            password: string, latitude: number,
+            longitude: number
+        }>(req, {locations: ["body"]})
+
         try {
             let user = await User.findOne({
                 where: {
-                    username: userDetails.username
+                    username: details.username
                 }
             });
 
@@ -48,23 +63,46 @@ router.post(
             }
 
             await User.create({
-                ...userDetails
+                ...details
             })
 
             res.status(201).json({
-                message: `User ${userDetails.username} created;`
+                message: `User ${details.username} created;`
             });
         } catch (err) {
             res.status(500).json({
-                error: `${err}`
+                error: [err]
             });
         }
     }
 )
 
-router.post("/login", ValidateLogin,
+router.post("/login",
+    ValidateLogin,
+    Validate,
     async(req: Request, res: Response) => {
+        let details = matchedData<{
+            username: string, password: string
+        }>(req, {locations: ["body"]})
 
+        try {
+            let user = await User.findOne({
+                where: {
+                    username: details.username,
+                    password: details.password
+                }
+            });
+
+            if (!user) {
+                res.status(404).json({ error: "Invalid username and/or password." });
+                return;
+            }
+            res.status(200).json({ message: "Logged in" });
+        } catch (err) {
+            res.status(500).json({ 
+                error: [err]
+            });
+        }
     }
 )
 
