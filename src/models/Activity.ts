@@ -1,18 +1,17 @@
 import { DataTypes, Model } from "sequelize";
-import connection from "../db";
+import sequelize from "../db";
 
-interface ActivityModel extends Model {
-    id?: number,
-    user: number,
-    name: string,
-    description: string,
-    start: string,
-    end: string,
-    status: string,
+class Activity extends Model {
+    declare id: number;
+    declare user: number;
+    declare name: string;
+    declare description: string;
+    declare start: string;
+    declare end: string;
+    declare status: string;
 }
 
-const Activity = connection.define(
-    "activities",
+Activity.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -29,7 +28,7 @@ const Activity = connection.define(
             allowNull: false,
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         start: {
@@ -46,8 +45,10 @@ const Activity = connection.define(
         },
     },
     {
+        sequelize,
+        modelName: "Activity",
         tableName: "activities",
     }
 );
 
-export { Activity, ActivityModel };
+export { Activity };

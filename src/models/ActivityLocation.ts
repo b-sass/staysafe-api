@@ -1,14 +1,13 @@
 import { DataTypes, Model } from "sequelize";
-import connection from "../db";
+import sequelize from "../db";
 
-interface ActivityLocationModel extends Model {
-    activity: number,
-    from: number,
-    to: number,
+class ActivityLocation extends Model {
+    declare activity: number;
+    declare from: number;
+    declare to: number;
 }
 
-const ActivityLocation = connection.define(
-    "activity_locations",
+ActivityLocation.init(
     {
         activity: {
             type: DataTypes.INTEGER,
@@ -29,9 +28,11 @@ const ActivityLocation = connection.define(
         },
     },
     {
+        sequelize,
+        modelName: "ActivityLocation",
         tableName: "activity_locations",
         timestamps: false,
     }
 );
 
-export { ActivityLocation, ActivityLocationModel };
+export { ActivityLocation };

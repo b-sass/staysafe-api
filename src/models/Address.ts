@@ -1,17 +1,16 @@
 import { DataTypes, Model } from "sequelize";
-import connection from "../db";
+import sequelize from "../db";
 
-interface AddressModel extends Model {
-    id?: number,
-    line_one: string,
-    line_two?: string,
-    county?: string,
-    postcode: string,
-    country: string,
+class Address extends Model {
+    declare id: number;
+    declare line_one: string;
+    declare line_two?: string;
+    declare county?: string;
+    declare postcode: string;
+    declare country: string;
 }
 
-const Address = connection.define(
-    "addresses",
+Address.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -40,8 +39,10 @@ const Address = connection.define(
         },
     },
     {
+        sequelize,
+        modelName: "Address",
         tableName: "addresses",
     }
 );
 
-export { Address, AddressModel };
+export { Address };
