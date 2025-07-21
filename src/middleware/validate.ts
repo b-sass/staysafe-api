@@ -20,51 +20,74 @@ export const Validate = (req: Request, res: Response, next: NextFunction) => {
     next();
 };
 
-export const ValidateUser = [
+export const ValidateCreateUser = [
     body('first_name')
         .isString().withMessage("must be string")
+        .trim()
         .notEmpty().withMessage("cannot be empty")
         .isLength({ max: 32 }).withMessage("max length: 32")
         .escape(),
     body("last_name")
         .isString().withMessage("must be string")
+        .trim()
         .notEmpty().withMessage("cannot be empty")
         .isLength({ max: 32 }).withMessage("max length: 32")
         .escape(),
     body("username")
         .isString().withMessage("must be string")
+        .trim()
         .notEmpty().withMessage("cannot be empty")
         .isLength({ max: 32 }).withMessage("max length: 32")
         .escape(),
     body("phone")
         .isString().withMessage("must be string")
+        .trim()
         .notEmpty().withMessage("cannot be empty")
         .isLength({ max: 32 }).withMessage("max length: 32")
         .escape(),
     body("password")
         .isString().withMessage("must be string")
+        .trim()
         .notEmpty().withMessage("cannot be empty")
         .isLength({ min: 4, max: 32 }).withMessage("min length: 4, max length: 32")
         .escape(),
     body("latitude")
-        .optional()
+        .optional({values: "null"})
         .default(null)
         .isFloat().withMessage("must be float"),
     body("longitude")
-        .optional()
+        .optional({values: "null"})
         .default(null)
         .isFloat().withMessage("must be float"),
 ];
 
-export const ValidateLogin = [
+export const ValidateUserDetails = [
     body("username")
-        .notEmpty().withMessage("must be string")
-        .isString().withMessage("cannot be empty")
+        .isString().withMessage("must be string")
+        .trim()
+        .notEmpty().withMessage("cannot be empty")
         .isLength({ max: 32 }).withMessage("max length: 32")
         .escape(),
     body("password")
-        .notEmpty().withMessage("must be string")
-        .isString().withMessage("cannot be empty")
+        .isString().withMessage("must be string")
+        .trim()
+        .notEmpty().withMessage("cannot be empty")
         .isLength({ min: 4, max: 32 }).withMessage("min length: 4, max length: 32")
         .escape(),
 ];
+
+export const ValidateContactDetails = [
+    body("user")
+        .notEmpty().withMessage("cannot be empty")
+        .isInt(),
+    body("contact")
+        .notEmpty().withMessage("cannot be empty")
+        .isInt(),
+    body("label")
+        .optional()
+        .isString().withMessage("must be string")
+        .trim()
+        .notEmpty().withMessage("cannot be empty")
+        .isLength({min: 4, max: 32}).withMessage("min length: 4, max length: 32")
+        .escape(),
+]

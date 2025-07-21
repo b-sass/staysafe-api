@@ -1,17 +1,16 @@
 import { DataTypes, Model } from "sequelize";
-import connection from "../db";
+import sequelize from "../db";
 
-interface UserModel extends Model {
-    id?: number,
-    username: string,
-    first_name: string,
-    last_name: string,
-    phone: string,
-    password: string,
+class User extends Model {
+    declare id: number;
+    declare username: string;
+    declare first_name: string;
+    declare last_name: string;
+    declare phone: string;
+    declare password: string;
 }
 
-const User = connection.define(
-    "users",
+User.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -49,8 +48,10 @@ const User = connection.define(
         },
     },
     {
+        sequelize,
+        modelName: "User",
         tableName: "users",
     }
 );
 
-export { User, UserModel };
+export { User };

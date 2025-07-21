@@ -1,13 +1,13 @@
 import { DataTypes, Model } from "sequelize";
-import connection from "../db";
+import sequelize from "../db";
 
-interface ContactModel extends Model {
-    user: number,
-    contact: number,
+class Contact extends Model {
+    declare user: number;
+    declare contact: number;
+    declare label: string;
 }
 
-const Contact = connection.define(
-    "contacts",
+Contact.init(
     {
         user: {
             type: DataTypes.INTEGER,
@@ -19,11 +19,18 @@ const Contact = connection.define(
             primaryKey: true,
             allowNull: false,
         },
+        label: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     },
     {
+        sequelize,
+        modelName: "Contacts",
         tableName: "contacts",
         timestamps: false,
+        
     }
 );
 
-export { Contact, ContactModel };
+export { Contact };

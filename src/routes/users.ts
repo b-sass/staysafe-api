@@ -1,109 +1,43 @@
-import { Request, RequestHandler, Response, Router } from "express";
-import { User } from "../models/User";
+import { Router } from "express";
+import { Validate, ValidateCreateUser, ValidateUserDetails } from "../middleware/validate";
+import { createUser, deleteUser, getAllUsers, getContactsForUser, getUserByID, userLogin } from "../controllers/userController";
+
 const router = Router();
-import { Validate, ValidateLogin, ValidateUser } from "../middleware/validate";
-import { matchedData } from "express-validator";
 
+router.get(
+    "/",
+    getAllUsers
+)
 
-//Get all users
-router.get("/", async (req: Request, res: Response) => {
-    let users = await User.findAll();
-
-    if (!users) {
-        res.status(404).json({message: "No users in the database"});
-        return;
-    }
-
-    res.status(200).send(users);
-})
-
-// Get user by ID
-router.get("/:id", async (req: Request, res: Response) => {
-    let userID = req.params.id;
-    try {
-        let user = await User.findByPk(parseInt(userID));
-
-        if (!user) { 
-            res.status(404).json({ error: "No user found."})
-            return;
-        }
-
-        res.status(200).json(user);
-    } catch (err) {
-        res.status(500).json({
-            error: [err]
-        })
-    }
-});
+router.get(
+    "/:id", 
+    getUserByID
+);
 
 router.post(
     "/",
-    ValidateUser,
+    ValidateCreateUser,
     Validate,
-    async (req: Request, res: Response) => {
-        let details = matchedData<{
-            first_name: string, last_name: string,
-            username: string, phone: string,
-            password: string, latitude: number,
-            longitude: number
-        }>(req, {locations: ["body"]})
-
-        try {
-            let user = await User.findOne({
-                where: {
-                    username: details.username
-                }
-            });
-
-            if (user) {
-                res.status(400).json({
-                    error: "User with this username already exists."
-                });
-                return;
-            }
-
-            await User.create({
-                ...details
-            })
-
-            res.status(201).json({
-                message: `User ${details.username} created;`
-            });
-        } catch (err) {
-            res.status(500).json({
-                error: [err]
-            });
-        }
-    }
+    createUser
 )
 
-router.post("/login",
-    ValidateLogin,
+router.post(
+    "/login",
+    ValidateUserDetails,
     Validate,
-    async(req: Request, res: Response) => {
-        let details = matchedData<{
-            username: string, password: string
-        }>(req, {locations: ["body"]})
+    userLogin
+)
 
-        try {
-            let user = await User.findOne({
-                where: {
-                    username: details.username,
-                    password: details.password
-                }
-            });
+router.delete(
+    "/", 
+    ValidateUserDetails,
+    Validate,
+    deleteUser
+)
 
-            if (!user) {
-                res.status(404).json({ error: "Invalid username and/or password." });
-                return;
-            }
-            res.status(200).json({ message: "Logged in" });
-        } catch (err) {
-            res.status(500).json({ 
-                error: [err]
-            });
-        }
-    }
+router.get(
+    "/contacts/:id",
+    getContactsForUser
 )
 
 export default router;

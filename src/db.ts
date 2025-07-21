@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const connection = new Sequelize(
+const sequelize = new Sequelize(
 	process.env.DB_NAME!,
 	process.env.DB_USER!,
 	process.env.DB_PASS,
@@ -13,4 +13,4 @@ const connection = new Sequelize(
 	}
 )
 
-export default connection;
+export default sequelize;

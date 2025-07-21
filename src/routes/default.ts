@@ -13,20 +13,14 @@ router.get("/", (req: Request, res: Response) => {
           {
             "endpoint": "/",
             "description": "Returns all activities",
-            "examples": [
-              "http://softwarehub.uk/unibase/staysafe/v1/api/activities",
-              "http://softwarehub.uk/unibase/staysafe/v1/api/activities?orderby=ActivityLeave"
-            ]
           },
           {
             "endpoint": "/{id}",
             "description": "Returns the specific activity identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/activities/1"
           },
           {
             "endpoint": "/users/{id}",
             "description": "Returns all the activities associated with a specific user identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/activities/users/1"
           }
         ],
         "post": {
@@ -65,15 +59,10 @@ router.get("/", (req: Request, res: Response) => {
           {
             "endpoint": "/",
             "description": "Returns all locations",
-            "examples": [
-              "http://softwarehub.uk/unibase/staysafe/v1/api/locations",
-              "http://softwarehub.uk/unibase/staysafe/v1/api/locations?orderby=LocationName"
-            ]
           },
           {
             "endpoint": "/{id}",
             "description": "Returns the specific location identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/locations/1"
           }
         ],
         "post": {
@@ -98,19 +87,14 @@ router.get("/", (req: Request, res: Response) => {
           {
             "endpoint": "/",
             "description": "Returns all positions",
-            "examples": [
-              "http://softwarehub.uk/unibase/staysafe/v1/api/positions"
-            ]
           },
           {
             "endpoint": "/{id}",
             "description": "Returns the specific position identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/positions/1"
           },
           {
             "endpoint": "/activities/{id}",
             "description": "Returns all the positions associated with a specific activity identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/positions/activities/2"
           }
         ],
         "post": {
@@ -135,15 +119,10 @@ router.get("/", (req: Request, res: Response) => {
           {
             "endpoint": "/",
             "description": "Returns all status entries",
-            "examples": [
-              "http://softwarehub.uk/unibase/staysafe/v1/api/status",
-              "http://softwarehub.uk/unibase/staysafe/v1/api/status?orderby=StatusName"
-            ]
           },
           {
             "endpoint": "/{id}",
             "description": "Returns the specific status entry identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/locations/1"
           }
         ]
       }
@@ -156,17 +135,14 @@ router.get("/", (req: Request, res: Response) => {
           {
             "endpoint": "/",
             "description": "Returns all users",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/users"
           },
           {
             "endpoint": "/{id}",
             "description": "Returns the specific user identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/users/1"
           },
           {
             "endpoint": "/contacts/{id}",
             "description": "Returns all users who are contacts of the specific user identified by the id provided",
-            "example": "http://softwarehub.uk/unibase/staysafe/v1/api/users/contacts/1"
           }
         ],
         "post": {

@@ -1,15 +1,14 @@
 import { DataTypes, Model } from "sequelize";
-import connection from "../db";
+import sequelize from "../db";
 
-interface LocationModel extends Model {
-    id?: number,
-    lat: number,
-    long: number,
-    address: number,
+class Location extends Model {
+    declare id: number;
+    declare lat: number;
+    declare long: number;
+    declare address: number;
 }
 
-const Location = connection.define(
-    "locations",
+Location.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -31,8 +30,10 @@ const Location = connection.define(
         },
     },
     {
+        sequelize,
+        modelName: "Location",
         tableName: "locations",
     }
 );
 
-export { Location, LocationModel };
+export { Location };
