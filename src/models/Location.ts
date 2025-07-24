@@ -3,8 +3,8 @@ import sequelize from "../db";
 
 class Location extends Model {
     declare id: number;
-    declare lat: number;
-    declare long: number;
+    declare latitude: number;
+    declare longitude: number;
     declare address: number;
 }
 
@@ -15,11 +15,11 @@ Location.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        lat: {
+        latitude: {
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        long: {
+        longitude: {
             type: DataTypes.FLOAT,
             allowNull: false,
             field: 'long',
