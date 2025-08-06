@@ -1,36 +1,31 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db";
 
-class Contact extends Model {
-    declare user: number;
-    declare contact: number;
-    declare label: string;
+class UserLocation extends Model {
+    declare userID: number;
+    declare locationID: number;
 }
 
-Contact.init(
+UserLocation.init(
     {
         userID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
         },
-        contactID: {
+        locationID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
+            field: 'from',
         },
-        label: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
     },
     {
         sequelize,
-        modelName: "Contacts",
-        tableName: "contacts",
+        modelName: "UserLocation",
+        tableName: "user_locations",
         timestamps: false,
-        
     }
 );
 
-export { Contact };
+export { UserLocation };

@@ -22,12 +22,11 @@ Location.init(
         longitude: {
             type: DataTypes.FLOAT,
             allowNull: false,
-            field: 'long',
         },
-        address: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+        name: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        }
     },
     {
         sequelize,

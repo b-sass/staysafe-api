@@ -3,7 +3,7 @@ import sequelize from "../db";
 
 class Activity extends Model {
     declare id: number;
-    declare user: number;
+    declare userID: number;
     declare name: string;
     declare description: string;
     declare start: string;
@@ -19,7 +19,7 @@ Activity.init(
             primaryKey: true,
             unique: true,
         },
-        user: {
+        userID: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
