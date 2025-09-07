@@ -1,7 +1,8 @@
 import connection from './db';
 import express, { Response } from "express";
 import userRouter from "./routes/users";
-import contactRouter from "./routes/contacts"
+import contactRouter from "./routes/contacts";
+import locationRouter from "./routes/locations";
 import defaultRouter from "./routes/default";
 import bodyParser from 'body-parser';
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/", defaultRouter);
 app.use("/users", userRouter);
 app.use("/contacts", contactRouter)
+app.use("/locations", locationRouter)
 
 
 app.listen(port, () => {
