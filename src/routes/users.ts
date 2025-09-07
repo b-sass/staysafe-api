@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { Validate, ValidateCreateUser, ValidateUserDetails } from "../middleware/validate";
+import { Validate } from "../middleware/validation/validate";
+import { ValidateCreateUser, ValidateUserDetails } from "../middleware/validation/validateUser";
 import { createUser, deleteUser, getAllUsers, getContactsForUser, getUserByID, userLogin } from "../controllers/userController";
 
 const router = Router();

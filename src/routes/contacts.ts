@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { Validate, ValidateContactDetails } from "../middleware/validate";
+import { Validate } from "../middleware/validation/validate";
+import { ValidateContactDetails } from "../middleware/validation/validateContact";
 import { createContact, deleteContact } from "../controllers/contactController";
 import { validateHeaderName } from "http";
 
