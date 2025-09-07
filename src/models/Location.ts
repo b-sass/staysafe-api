@@ -15,6 +15,10 @@ Location.init(
             autoIncrement: true,
             primaryKey: true,
         },
+        name: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         latitude: {
             type: DataTypes.FLOAT,
             allowNull: false,
@@ -23,10 +27,6 @@ Location.init(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        name: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        }
     },
     {
         sequelize,

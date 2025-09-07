@@ -17,7 +17,6 @@ UserLocation.init(
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
-            field: 'from',
         },
     },
     {
