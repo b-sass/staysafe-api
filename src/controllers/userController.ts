@@ -196,7 +196,7 @@ export const getUserLocations = async (req: Request, res: Response) => {
             type: QueryTypes.SELECT,
         });
 
-        if (!locations) {
+        if (!locations || locations.length == 0) {
             res.status(404).json({
                 error: `User ${user.username} has no locations.`
             })
