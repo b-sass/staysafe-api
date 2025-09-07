@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Validate } from "../middleware/validation/validate";
-import { ValidateCreateLocation } from "../middleware/validation/validateLocation";
-import { createLocation } from "../controllers/locationController";
+import { ValidateCreateLocation, ValidateDeleteLocation } from "../middleware/validation/validateLocation";
+import { createLocation, deleteLocation } from "../controllers/locationController";
 
 const router = Router();
 
@@ -11,5 +11,12 @@ router.post(
     Validate,
     createLocation
 );
+
+router.delete(
+    "/",
+    ValidateDeleteLocation,
+    Validate,
+    deleteLocation
+)
 
 export default router;
