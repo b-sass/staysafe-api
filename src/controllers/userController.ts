@@ -145,7 +145,7 @@ export const userLogin = async(req: Request, res: Response) => {
     }
 }
 
-export const getContactsForUser = async (req: Request, res: Response) => {
+export const getUserContacts = async (req: Request, res: Response) => {
     let userID = req.params.id;
     
     try {
@@ -172,6 +172,42 @@ export const getContactsForUser = async (req: Request, res: Response) => {
         res.status(200).json(contacts);
     } catch (err) {
         res.status(500).json({ 
+            error: "Internal Server Error",
+            message: `${err}`
+        });
+    }
+}
+
+export const getUserLocations = async (req: Request, res: Response) => {
+    let userID = req.params.id;
+
+    try {
+        let user = await User.findByPk(parseInt(userID));
+
+        if (!user) {
+            res.status(404).json({
+                error: `User ${userID} not found.`
+            })
+            return;
+        }
+
+        let locations = await sequelize.query("SELECT locations.* FROM user_locations RIGHT JOIN locations ON user_locations.locationID = locations.id WHERE user_locations.userID = :id;", {
+            replacements: { id: userID },
+            type: QueryTypes.SELECT,
+        });
+
+        if (!locations) {
+            res.status(404).json({
+                error: `User ${user.username} has no locations.`
+            })
+            return;
+        }
+
+        res.status(200).json({
+            ...locations
+        })
+    } catch (err) {
+        res.status(500).json({
             error: "Internal Server Error",
             message: `${err}`
         });

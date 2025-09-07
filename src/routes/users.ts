@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Validate } from "../middleware/validation/validate";
 import { ValidateCreateUser, ValidateUserDetails } from "../middleware/validation/validateUser";
-import { createUser, deleteUser, getAllUsers, getContactsForUser, getUserByID, userLogin } from "../controllers/userController";
+import { createUser, deleteUser, getAllUsers, getUserContacts, getUserLocations, getUserByID, userLogin } from "../controllers/userController";
 
 const router = Router();
 
@@ -37,8 +37,13 @@ router.delete(
 )
 
 router.get(
-    "/contacts/:id",
-    getContactsForUser
+    "/:id/contacts/",
+    getUserContacts
+)
+
+router.get(
+    "/:id/locations",
+    getUserLocations
 )
 
 export default router;
