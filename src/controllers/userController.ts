@@ -133,10 +133,9 @@ export const userLogin = async(req: Request, res: Response) => {
             });
             return;
         }
-        res.status(200).json({
-            message: "Logged in",
-            data: user,
-        });
+        res.status(200).json(
+            user
+        );
     } catch (err) {
         console.log(err)
         res.status(500).json({ 
