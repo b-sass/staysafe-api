@@ -203,9 +203,7 @@ export const getUserLocations = async (req: Request, res: Response) => {
             return;
         }
 
-        res.status(200).json({
-            ...locations
-        })
+        res.status(200).send(locations)
     } catch (err) {
         res.status(500).json({
             error: "Internal Server Error",
