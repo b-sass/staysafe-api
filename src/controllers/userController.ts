@@ -158,18 +158,12 @@ export const getUserContacts = async (req: Request, res: Response) => {
             return;
         }
 
-        let contacts = await sequelize.query("SELECT users.*, contacts.label FROM contacts RIGHT JOIN users ON contacts.contact = users.id WHERE contacts.user = :id", {
+        let contacts = await sequelize.query("SELECT users.id, users.first_name, users.last_name,users.phone, users.username, users.latitude, users.longitude, contacts.label FROM contacts RIGHT JOIN users ON contacts.contactID = users.id WHERE contacts.userID = :id;", {
             replacements: { id: userID },
             type: QueryTypes.SELECT,
         });
 
-        if (!contacts) {
-            res.status(404).json({
-                error: `User ${userID} has 0 contacts.`
-            })
-        }
-
-        res.status(200).json(contacts);
+        res.status(200).send(contacts);
     } catch (err) {
         res.status(500).json({ 
             error: "Internal Server Error",

@@ -1,17 +1,28 @@
 import { body } from "express-validator";
 
-export const ValidateContactDetails = [
+export const ValidateContactCreation = [
     body("user")
         .notEmpty().withMessage("cannot be empty")
-        .isInt(),
+        .isInt().withMessage("must be int"),
     body("contact")
         .notEmpty().withMessage("cannot be empty")
-        .isInt(),
+        .isString().withMessage("must be string")
+        .trim()
+        .isLength({max:32}).withMessage("max length: 32")
+        .escape(),
     body("label")
         .optional()
         .isString().withMessage("must be string")
         .trim()
-        .notEmpty().withMessage("cannot be empty")
-        .isLength({min: 4, max: 32}).withMessage("min length: 4, max length: 32")
+        .isLength({max: 32}).withMessage("max length: 32")
         .escape(),
+];
+
+export const ValidateContactDeletion = [
+    body("user")
+        .notEmpty().withMessage("cannot be empty")
+        .isInt().withMessage("must be int"),
+    body("contact")
+        .notEmpty().withMessage("cannot be empty")
+        .isInt().withMessage("must be int"),
 ];
