@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Validate } from "../middleware/validation/validate";
-import { ValidateCreateUser, ValidateUserDetails } from "../middleware/validation/validateUser";
-import { createUser, deleteUser, getAllUsers, getUserContacts, getUserLocations, getUserByID, userLogin } from "../controllers/userController";
+import { ValidateCreateUser, ValidateUserDetails, ValidateUserUpdate } from "../middleware/validation/validateUser";
+import { createUser, deleteUser, getAllUsers, getUserContacts, getUserLocations, getUserByID, userLogin, updateUser } from "../controllers/userController";
 
 const router = Router();
 
@@ -44,6 +44,12 @@ router.get(
 router.get(
     "/:id/locations",
     getUserLocations
+)
+
+router.put(
+    "/:id/",
+    ValidateUserUpdate,
+    updateUser
 )
 
 export default router;
