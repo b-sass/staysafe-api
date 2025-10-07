@@ -29,7 +29,7 @@ Activity.init(
         },
         description: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         start: {
             type: DataTypes.TIME,
@@ -37,11 +37,11 @@ Activity.init(
         },
         end: {
             type: DataTypes.TIME,
-            allowNull: false,
+            allowNull: true,
         },
         status: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
     },
     {
