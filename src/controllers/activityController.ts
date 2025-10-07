@@ -34,3 +34,15 @@ export const getUserActivities = async (req: Request, res: Response) => {
 export const getContactActivities = (req: Request, res: Response) => {
 
 }
+
+export const createActivity = async (req: Request, res: Response) => {
+
+}
+
+export const updateActivity = async (req: Request, res: Response) => {
+    
+}
+
+export const deleteActivity = async (req: Request, res: Response) => {
+    
+}
