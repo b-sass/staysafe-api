@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createActivity, deleteActivity, updateActivity } from "../controllers/activityController";
-import { ValidateCreateActivity } from "../middleware/validation/validateActivity";
+import { createActivity, updateActivity } from "../controllers/activityController";
+import { ValidateActivityCreate, ValidateActivityUpdate } from "../middleware/validation/validateActivity";
 import { Validate } from "../middleware/validation/validate";
 
 const router = Router();
@@ -8,19 +8,16 @@ const router = Router();
 // Add activity
 router.post(
     "/",
-    ValidateCreateActivity,
+    ValidateActivityCreate,
     Validate,
     createActivity
 )
 
 router.put(
-    "/",
+    "/:id/",
+    ValidateActivityUpdate,
+    Validate,
     updateActivity
-)
-
-router.delete(
-    "/",
-    deleteActivity
 )
 
 
