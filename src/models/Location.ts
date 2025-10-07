@@ -5,7 +5,7 @@ class Location extends Model {
     declare id: number;
     declare latitude: number;
     declare longitude: number;
-    declare address: number;
+    declare name: string;
 }
 
 Location.init(
