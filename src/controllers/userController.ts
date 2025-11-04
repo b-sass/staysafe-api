@@ -148,14 +148,34 @@ export const userLogin = async(req: Request, res: Response) => {
 
 export const getUserActivities = async (req: Request, res: Response) => {
     let userID = req.params.id;
+    let status = req.query.status;
+
+    const statuses = ["active", "finished", "paused"];
 
     try {
-        let activities = await Activity.findAll({
-            where: {
-                userID: userID
+        if (status) {
+            if (!statuses.includes(status.toString())) {
+                res.status(404).json({
+                    message: "Status is not one of ['active', 'finished', 'paused']"
+                });
+                return;
             }
-        });
 
+            var activities = await Activity.findAll({
+                where: {
+                    userID: userID,
+                    status: status,
+                },
+            });
+        } else {
+
+            var activities = await Activity.findAll({
+                where: {
+                    userID: userID,
+                },
+            });
+        }
+            
         if (!activities) {
             res.status(400).json({
                 message: "This user has no activities."
