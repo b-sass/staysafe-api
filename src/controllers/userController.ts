@@ -3,6 +3,7 @@ import { matchedData } from "express-validator";
 import { User } from "../models/User";
 import sequelize from "../db";
 import { QueryTypes } from "sequelize";
+import { Activity } from "../models/Activity";
 
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -142,6 +143,32 @@ export const userLogin = async(req: Request, res: Response) => {
             error: "Internal Server Error",
             message: `${err}`
         });
+    }
+}
+
+export const getUserActivities = async (req: Request, res: Response) => {
+    let userID = req.params.id;
+
+    try {
+        let activities = await Activity.findAll({
+            where: {
+                userID: userID
+            }
+        });
+
+        if (!activities) {
+            res.status(400).json({
+                message: "This user has no activities."
+            });
+            return;
+        }
+    
+        res.status(200).json(activities)
+    } catch (err) {
+        res.status(500).json({
+            error: "Internal Server Error",
+            message: `${err}`
+        })
     }
 }
 
