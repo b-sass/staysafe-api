@@ -4,6 +4,24 @@ import { User } from "../models/User";
 import sequelize from "../db";
 import { QueryTypes } from "sequelize";
 import { Activity } from "../models/Activity";
+import { Location } from "../models/Location";
+import { ActivityLocation } from "../models/ActivityLocation";
+
+interface UserActivityResponse {
+    id: number,
+    userID: number,
+    name: string,
+    description: string,
+    status: string,
+    start: string,
+    end: string,
+    fromLat: number,
+    fromLong: number,
+    fromName: string,
+    toLat: number,
+    toLong: number,
+    toName: string,
+};
 
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -160,7 +178,8 @@ export const getUserActivities = async (req: Request, res: Response) => {
                 });
                 return;
             }
-
+            
+            // Activity status filter
             var activities = await Activity.findAll({
                 where: {
                     userID: userID,
@@ -182,8 +201,45 @@ export const getUserActivities = async (req: Request, res: Response) => {
             });
             return;
         }
-    
-        res.status(200).json(activities)
+        
+        // Add location data to activities
+        let result: UserActivityResponse[] = []
+
+        for (const a of activities) {
+            let al = await ActivityLocation.findOne({where: {activityID: a.id}})
+            let from = await Location.findByPk(al?.from)
+            let to = await Location.findByPk(al?.to)
+
+            console.log(`al: ${al}`)
+            console.log(`from: ${from}`)
+            console.log(`to: ${to}`)
+
+            if (al == null || from == null || to == null) {
+                res.status(404).send({message: "Could not find location data for activity"});
+                return;
+            }
+
+            result.push({
+                id: a.id,
+                userID: a.userID,
+                name: a.name,
+                description: a.description,
+                start: a.start,
+                end: a.end,
+                status: a.status,
+                fromLat: from.latitude,
+                fromLong: from.longitude,
+                fromName: from.name,
+                toLat: to.latitude,
+                toLong: to.longitude,
+                toName: to.name,
+            })
+
+            console.log("pushed")
+        }
+        // console.log(result)
+
+        res.status(200).json(result)
     } catch (err) {
         res.status(500).json({
             error: "Internal Server Error",
